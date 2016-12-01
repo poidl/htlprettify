@@ -1,0 +1,33 @@
+*) in *tex file, fill in the png files without size with/height info
+ 	\includegraphics{EXAMPLE.png}	
+*) run hlatex with utf8 encoding:
+	htlatex main.tex "xhtml, charset=utf-8" " -cunihtf -utf8"
+	IF ERROR, ARE YOU USING \usepackage{authblk} % for multiple authors with different affiliations ??? this causes problems
+*) In the *.html file, 
+	*) substitute the *png's with *svg's
+	*) add style="text-align:center" to the p element above the img element.
+	*) add style="width: 100%; max-width: 800px;" to the img's
+	This should center images and make them resize (mobile!)	
+*) In the .css files, fill in
+	* {
+  		font-family: Arial, sans-serif;
+	}
+	This should remove old-looking serif fonts.
+*) Set an alternative HTML document title.
+*) Check if citations linebreak (long lists of \citep{}). Insert newlines if not.
+*) Check if references linebreak. If long URLs are referenced, this is probably not the case. A hacky solution would be to insert spaces in the displayed URL (the displayed URL is then invalid, but that doesn't affect the href URL, so it still works). For a cleaner solution, consider hiding the full URL in the PDF document, by using
+
+\usepackage[hidelinks]{hyperref}
+% Redefinition, symbol included in link:
+\let\orighref\href
+\renewcommand{\href}[2]{\underline{\orighref{#1}{#2}}}
+
+in the latex document.
+
+*) Set a body style max width suitable for large monitors:
+	style="font-size: 100%; width=100%; max-width: 800px; padding: 1em; margin: auto;"
+*) As suggested by http://www.w3schools.com/css/css_rwd_viewport.asp , do 
+	<meta name=viewport content="width=device-width, initial-scale=1">
+
+MANUAL MODIFICATIONS
+*) Set alternative <h?> titles
