@@ -3,6 +3,7 @@
 
 """HTML modifications"""
 
+import shutil
 from bs4 import BeautifulSoup
 
 
@@ -15,10 +16,9 @@ def mytitle(path, newtitle):
     soup = BeautifulSoup(s, 'html.parser')
 
     title = soup.find_all('title')
-    # print(title)
     if newtitle:
         title[0].string.replace_with(newtitle)
-    # soup['title'] = newtitle
+
     html = soup.prettify()
     f = open(path + "/main.html", "w")
     f.write(html)
@@ -51,9 +51,7 @@ def toc(path):
     ls = len(sectitlelist)
     ids = [[] for i in range(ls)]
     titles = ids.copy()
-    #     l = list(sectitlelist[i].children)
-    #     if l[0].get('class') == ['titlemark']:
-    # for l in sectitlelist:
+
     for i in range(ls):
         l = sectitlelist[i]
         if l['class'] == ['sectionHead']:
@@ -116,12 +114,49 @@ def backtotop(path):
 """
 
     soup_s = BeautifulSoup(s, 'html.parser')
-    # print(soup_ol.prettify())
 
-    # elem = soup.body.find_all("h3", {"class": "sectionHead"})[0]
     idx = soup.html.contents.index(soup.html.body)
     soup.contents.insert(idx, soup_s.script)
     soup.contents.insert(idx + 1, soup_s.div)
     html = soup.prettify()
     f = open(path + "/main.html", "w")
     f.write(html)
+
+
+def remove_newlines_from_spans(path):
+    """Umlauts in \\emph{} blocks cause spaces within a word. This does not
+     solve the problem, but as a first step removes newlines in spans. The
+     HTML file still needs to be modified manually."""
+    f = open(path + "/main.html")
+    s = f.read()
+
+    soup = BeautifulSoup(s, 'html.parser')
+    elem = soup.body.find_all("span", {"class": "cmssi-12"})
+    [span.string.replace_with(span.get_text(strip=True)) for span in elem]
+    # do not prettrify
+    # html = soup.prettify()
+    html = str(soup)
+    f = open(path + "/main.html", "w")
+    f.write(html)
+
+
+def uglyhack(path):
+    """Back-to-top button for long single-pages."""
+    f = open(path + "/main.html")
+    s = f.read()
+
+    fin = open(path + "/main.html", 'r')
+    fout = open(path + "/tmp.html", 'w')
+    previous = False
+    l1 = ""
+    for line in fin:
+        if '<span class="cmssi-12">' in line:
+            l1 = l1 + line.rstrip()
+            # previous = True
+        else:
+            if l1:
+                fout.write(l1)
+                l1 = ""
+            fout.write(line)
+
+    shutil.move(path + "/tmp.html", path + "/main.html")

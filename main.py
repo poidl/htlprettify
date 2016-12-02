@@ -74,5 +74,7 @@ myhtml.mytitle(tmpdir, title)
 myhtml.viewport(tmpdir)
 myhtml.toc(tmpdir)
 myhtml.backtotop(tmpdir)
+myhtml.remove_newlines_from_spans(tmpdir)
+# myhtml.uglyhack(tmpdir)
 
 print('done')
