@@ -67,9 +67,12 @@ figures.png2svgQuirk(tmpdir)
 mycss.figs(tmpdir)
 mycss.fonts(tmpdir)
 mycss.body(tmpdir)
+mycss.backtotop(tmpdir)
 
 # HTML stuff
 myhtml.mytitle(tmpdir, title)
 myhtml.viewport(tmpdir)
 myhtml.toc(tmpdir)
+myhtml.backtotop(tmpdir)
+
 print('done')

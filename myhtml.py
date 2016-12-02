@@ -95,3 +95,33 @@ def toc(path):
     html = soup.prettify()
     f = open(path + "/main.html", "w")
     f.write(html)
+
+
+def backtotop(path):
+    """Back-to-top button for long single-pages."""
+    f = open(path + "/main.html")
+    s = f.read()
+
+    soup = BeautifulSoup(s, 'html.parser')
+
+    s = """
+    <script type="text/javascript">
+	    window.onscroll=function(){
+        console.log('is scrolled')
+        document.getElementById('back-to-top').style.display="inline-block"};
+    </script>
+    <div style="position: fixed; bottom: 25px; width=100%; max-width: 800px; margin:auto; text-align: right; left:0; right: 0;  padding-right: 1em;">
+        <a href="#" id="back-to-top" class="back-to-top">Back to Top</a>
+    </div>
+"""
+
+    soup_s = BeautifulSoup(s, 'html.parser')
+    # print(soup_ol.prettify())
+
+    # elem = soup.body.find_all("h3", {"class": "sectionHead"})[0]
+    idx = soup.html.contents.index(soup.html.body)
+    soup.contents.insert(idx, soup_s.script)
+    soup.contents.insert(idx + 1, soup_s.div)
+    html = soup.prettify()
+    f = open(path + "/main.html", "w")
+    f.write(html)

@@ -53,3 +53,28 @@ def body(path):
     html = soup.prettify()
     f = open(path + "/main.html", "w")
     f.write(html)
+
+
+def backtotop(path):
+    """Back-to-top button for long single-pages."""
+    fin = open(path + "/main.css", 'r')
+    fout = open(path + "/tmp.css", 'w')
+
+    s = """a.back-to-top {
+    background-color: blue;
+    border: none;
+    color: white;
+	border-radius: 12px;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: none;
+    font-size: 16px;
+	z-index: 999;
+}
+"""
+
+    for line in fin:
+        fout.write(line)
+    fout.write(s)
+    shutil.move(path + "/tmp.css", path + "/main.css")
