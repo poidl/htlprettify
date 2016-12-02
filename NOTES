@@ -30,5 +30,5 @@ in the latex document.
 	<meta name=viewport content="width=device-width, initial-scale=1">
 
 MANUAL MODIFICATIONS
-*) Umlauts in \emph{} blocks cause spaces within a word. If there are any, the final HTML file needs to be modified manually. The problem is caused by a combination of htlatex and the BeautifulSoup default formatter.
+*) Umlauts in \emph{} blocks cause spaces within a word. Attempt to fix in the final section of "main.py". In any case, check the final HTML file manually for errors. The problem is caused by a combination of htlatex and the BeautifulSoup default formatter.
 *) Set alternative <h?> titles

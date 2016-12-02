@@ -3,7 +3,6 @@
 
 """HTML modifications"""
 
-import shutil
 from bs4 import BeautifulSoup
 
 
@@ -140,23 +139,34 @@ def remove_newlines_from_spans(path):
     f.write(html)
 
 
-def uglyhack(path):
-    """Back-to-top button for long single-pages."""
+def uglyhack(path, mystring):
+    """Fix umlauts in \\emph{}"""
     f = open(path + "/main.html")
     s = f.read()
+    soup = BeautifulSoup(s, 'html.parser')
+    elem = soup.body.find_all("span", {"class": "cmssi-12"})
+    # We search for the string with all spaces removed, to account for
+    # (seemingly arbitrary) variations introduced by htlatex
+    ms_alt = mystring.replace(' ', '')
+    st = ""
+    indices = []
 
-    fin = open(path + "/main.html", 'r')
-    fout = open(path + "/tmp.html", 'w')
-    previous = False
-    l1 = ""
-    for line in fin:
-        if '<span class="cmssi-12">' in line:
-            l1 = l1 + line.rstrip()
-            # previous = True
+    for i, e in enumerate(elem):
+        st = st + e.text.strip().replace(' ', '')
+        if st in ms_alt:
+            indices.append(i)
+            if st == ms_alt:
+                elem[indices[0]].string.replace_with(mystring)
+                for i in range(1, len(indices)):
+                    elem[indices[i]].decompose()
+                indices = []
+                st = ""
+            else:
+                continue
         else:
-            if l1:
-                fout.write(l1)
-                l1 = ""
-            fout.write(line)
+            # start from scratch
+            st = ""
 
-    shutil.move(path + "/tmp.html", path + "/main.html")
+    html = soup.prettify()
+    f = open(path + "/main.html", "w")
+    f.write(html)

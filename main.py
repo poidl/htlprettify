@@ -74,7 +74,9 @@ myhtml.mytitle(tmpdir, title)
 myhtml.viewport(tmpdir)
 myhtml.toc(tmpdir)
 myhtml.backtotop(tmpdir)
-myhtml.remove_newlines_from_spans(tmpdir)
-# myhtml.uglyhack(tmpdir)
 
+mystring = 'Förderrichtlinie ”Modernitätsfonds”'
+myhtml.uglyhack(tmpdir, mystring)
+mystring = 'Tarifvertrag für den Öﬀentlichen Dienst der Länder 2015a, Tarifgebiet West'
+myhtml.uglyhack(tmpdir, mystring)
 print('done')
