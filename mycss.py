@@ -62,6 +62,7 @@ def backtotop(path):
 
     s = """a.back-to-top {
     background-color: blue;
+    opacity: 0.8;
     border: none;
     color: white;
 	border-radius: 12px;

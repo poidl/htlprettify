@@ -74,6 +74,7 @@ myhtml.mytitle(tmpdir, title)
 myhtml.viewport(tmpdir)
 myhtml.toc(tmpdir)
 myhtml.backtotop(tmpdir)
+myhtml.bodyscrollx(tmpdir)
 
 mystring = 'Förderrichtlinie ”Modernitätsfonds”'
 myhtml.uglyhack(tmpdir, mystring)
