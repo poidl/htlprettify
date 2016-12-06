@@ -14,9 +14,13 @@ import myhtml
 path = '/home/stefan/Documents/bewerbungen/mfund'
 # Build directory for latex and htlatex
 tmpdir = 'build'
-# Set an alternative HTML document title. Empty string defaults to (possibly
+# Set an alternative document title and subtitle. Empty string defaults to (possibly
 # too long) latex title.
-title = 'Proposal mFUND'
+title = 'Numerical Ocean/Weather Modeling Platform as a Service'
+subtitle = 'Proposal for a feasibility study'
+# Set an alternative document title in <head> (title for browser tabs). Empty string defaults to (possibly
+# too long) latex title.
+headtitle = 'Proposal mFUND'
 
 
 # Create build directory and copy latex source files
@@ -70,7 +74,8 @@ mycss.body(tmpdir)
 mycss.backtotop(tmpdir)
 
 # HTML stuff
-myhtml.mytitle(tmpdir, title)
+myhtml.mytitle(tmpdir, title, subtitle)
+myhtml.myheadtitle(tmpdir, headtitle)
 myhtml.viewport(tmpdir)
 myhtml.toc(tmpdir)
 myhtml.backtotop(tmpdir)

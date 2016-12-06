@@ -3,11 +3,37 @@
 
 """HTML modifications"""
 
+import sys
 from bs4 import BeautifulSoup
 
 
-def mytitle(path, newtitle):
-    """Set an alternative HTML document title. Empty string is ignored
+def mytitle(path, newtitle, newsubtitle):
+    """Set alternative HTML document title and subtitle. Empty string is ignored
+    (leaves old title in place)."""
+    f = open(path + "/main.html")
+    s = f.read()
+
+    soup = BeautifulSoup(s, 'html.parser')
+
+    title = soup.find_all('h2', {"class": "titleHead"})
+    if newtitle:
+        title[0].clear()
+        title[0].append(newtitle)
+
+        if newsubtitle:
+            br = soup.new_tag('br')
+            subt = soup.new_tag('h3')
+            subt.append(newsubtitle)
+            title[0].append(br)
+            title[0].append(subt)
+
+    html = soup.prettify()
+    f = open(path + "/main.html", "w")
+    f.write(html)
+
+
+def myheadtitle(path, newtitle):
+    """Set an alternative document title in <head> (title for browser tabs). Empty string is ignored
     (leaves old title in place)."""
     f = open(path + "/main.html")
     s = f.read()
@@ -46,20 +72,26 @@ def toc(path):
 
     soup = BeautifulSoup(s, 'html.parser')
 
-    sectitlelist = soup.find_all('h3')
+    sectitlelist = soup.find_all('h3', {"class": "sectionHead"})
     ls = len(sectitlelist)
     ids = [[] for i in range(ls)]
     titles = ids.copy()
 
     for i in range(ls):
         l = sectitlelist[i]
-        if l['class'] == ['sectionHead']:
-            ids[i] = l.a['id']
-            titles[i] = l.contents[4].strip()
-            continue
-        # the remaining one is for the bibliography, which is not numbered
-        ids[i] = l.get('id')
-        titles[i] = l.text.strip()
+        ids[i] = l.a['id']
+        titles[i] = l.contents[4].strip()
+
+    # the remaining one should be the bibliography, which is not numbered
+    bib = soup.find_all('h3', {"class": "likesectionHead"})
+    l = bib[0]
+    ids.append(l.get('id'))
+    txt = l.text.strip()
+    if txt != 'References':
+        print('PROBLEM while scanning TOC entries. This should be the '+
+              'Bibliography section. ')
+        
+    titles.append(txt)
 
         # The html structure for an ordered list is:
 
