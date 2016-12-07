@@ -88,18 +88,18 @@ def toc(path):
     ids.append(l.get('id'))
     txt = l.text.strip()
     if txt != 'References':
-        print('PROBLEM while scanning TOC entries. This should be the '+
+        print('PROBLEM while scanning TOC entries. This should be the ' +
               'Bibliography section. ')
-        
+
     titles.append(txt)
 
-        # The html structure for an ordered list is:
+    # The html structure for an ordered list is:
 
-        # <ol>
-        #       <li><a href="HREF">NAME</a></li>
-        # </ol>
+    # <ol>
+    #       <li><a href="HREF">NAME</a></li>
+    # </ol>
 
-        # HREF are fragment identifiers here (#)
+    # HREF are fragment identifiers here (#)
 
     s1 = "<li><a href=\"#"
     s2 = "\">"
@@ -116,6 +116,9 @@ def toc(path):
     ol = ''.join(["<ol>", labels, "</ol>"])
 
     soup_ol = BeautifulSoup(ol, 'html.parser')
+    tag = soup_ol.new_tag("a")
+    tag['id'] = "mycontents"
+    soup_ol.li.insert_before(tag)
     # print(soup_ol.prettify())
 
     elem = soup.body.find_all("h3", {"class": "sectionHead"})[0]
@@ -144,7 +147,7 @@ def backtotop(path):
         }
     </script>
     <div style="position: fixed; bottom: 25px; width=100%; max-width: 800px; margin:auto; text-align: right; left:0; right: 0;  padding-right: 1em;">
-        <a href="#" id="back-to-top" class="back-to-top">Back to Top</a>
+        <a href="#mycontents" id="back-to-top" class="back-to-top">Table of contents</a>
     </div>
 """
 
