@@ -24,7 +24,7 @@ def figs(path):
         l['style'] = "width: 100%; max-width: 800px;"
         l.parent['style'] = "text-align:center"
 
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -50,7 +50,7 @@ def body(path):
 
     soup.body[
         'style'] = "font-size: 100%; width=100%; max-width: 800px; padding: 1em; margin: auto;"
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 

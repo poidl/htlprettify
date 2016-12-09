@@ -27,7 +27,7 @@ def mytitle(path, newtitle, newsubtitle):
             title[0].append(br)
             title[0].append(subt)
 
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -44,7 +44,7 @@ def myheadtitle(path, newtitle):
     if newtitle:
         title[0].string.replace_with(newtitle)
 
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -60,7 +60,7 @@ def viewport(path):
     new_tag['content'] = "width=device-width, initial-scale=1"
     soup.head.append(new_tag)
 
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -80,7 +80,7 @@ def toc(path):
     for i in range(ls):
         l = sectitlelist[i]
         ids[i] = l.a['id']
-        titles[i] = l.contents[4].strip()
+        titles[i] = l.contents[3].strip()
 
     # the remaining one should be the bibliography, which is not numbered
     bib = soup.find_all('h3', {"class": "likesectionHead"})
@@ -124,7 +124,7 @@ def toc(path):
     elem = soup.body.find_all("h3", {"class": "sectionHead"})[0]
     idx = soup.body.contents.index(elem)
     soup.body.contents.insert(idx, soup_ol.ol)
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -156,7 +156,7 @@ def backtotop(path):
     idx = soup.html.contents.index(soup.html.body)
     soup.contents.insert(idx, soup_s.script)
     soup.contents.insert(idx + 1, soup_s.div)
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -172,14 +172,14 @@ def remove_newlines_from_spans(path):
     elem = soup.body.find_all("span", {"class": "cmssi-12"})
     [span.string.replace_with(span.get_text(strip=True)) for span in elem]
     # do not prettrify
-    # html = soup.prettify()
+    # html = str(soup)
     html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
 
 def uglyhack(path, mystring):
-    """Fix umlauts in \\emph{}"""
+    """Fix umlauts in \\emph{}. THIS IS NOT NECESSARY IF OUTPUT IS NOT PRETTYFIED (WITH EACH HTML/XML TAG ON ITS OWN LINE)"""
     f = open(path + "/main.html")
     s = f.read()
     soup = BeautifulSoup(s, 'html.parser')
@@ -206,7 +206,7 @@ def uglyhack(path, mystring):
             # start from scratch
             st = ""
 
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
 
@@ -220,6 +220,6 @@ def bodyscrollx(path):
     soup = BeautifulSoup(s, 'html.parser')
     div = soup.new_tag("div", style="overflow-x: scroll;")
     soup.body.wrap(div)
-    html = soup.prettify()
+    html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
