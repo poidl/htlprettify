@@ -85,7 +85,7 @@ def toc(path):
     # the remaining one should be the bibliography, which is not numbered
     bib = soup.find_all('h3', {"class": "likesectionHead"})
     l = bib[0]
-    ids.append(l.get('id'))
+    ids.append(l.a['id'])
     txt = l.text.strip()
     if txt != 'References':
         print('PROBLEM while scanning TOC entries. This should be the ' +
@@ -104,7 +104,7 @@ def toc(path):
     s1 = "<li><a href=\"#"
     s2 = "\">"
     s3 = "</a></li>"
-
+    ls = len(titles)
     s1 = [s1] * ls
     s2 = [s2] * ls
     s3 = [s3] * ls
@@ -179,7 +179,8 @@ def remove_newlines_from_spans(path):
 
 
 def uglyhack(path, mystring):
-    """Fix umlauts in \\emph{}. THIS IS NOT NECESSARY IF OUTPUT IS NOT PRETTYFIED (WITH EACH HTML/XML TAG ON ITS OWN LINE)"""
+    """Fix umlauts in \\emph{}. THIS IS NOT NECESSARY IF OUTPUT IS NOT PRETTYFIED
+     (WITH EACH HTML/XML TAG ON ITS OWN LINE)"""
     f = open(path + "/main.html")
     s = f.read()
     soup = BeautifulSoup(s, 'html.parser')
