@@ -1,4 +1,4 @@
-# htlatex-prettify
+# htlprettify
 
 Post-process htlatex output.
 
