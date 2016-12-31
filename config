@@ -1,8 +1,8 @@
-[htlatex-prettify]
+[htlprettify]
 # Root directory of latex project, containing latex source
 path = /home/stefan/Documents/bewerbungen/mfund
 # Build directory for latex and htlatex
-tmpdir = build
+tmpdir = ../tmp
 # Set an alternative document title and subtitle. Empty string defaults to (possibly
 # too long) latex title.
 title = Numerical Ocean/Weather Modeling Platform as a Service

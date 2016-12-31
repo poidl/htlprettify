@@ -1,4 +1,10 @@
 __pycache__
 .vscode
 build
+dist
+*.egg-info
+tmp
+cleanall
+makeall
+doitall
 
