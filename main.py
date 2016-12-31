@@ -3,6 +3,7 @@
 
 """Post-process htlatex output"""
 
+import configparser
 import shutil
 import os
 import utils
@@ -10,20 +11,17 @@ import figures
 import mycss
 import myhtml
 
-# Root directory of latex project, containing latex source
-path = '/home/stefan/Documents/bewerbungen/mfund'
-# Build directory for latex and htlatex
-tmpdir = 'build'
-# Set an alternative document title and subtitle. Empty string defaults to (possibly
-# too long) latex title.
-title = 'Numerical Ocean/Weather Modeling Platform as a Service'
-subtitle = 'Proposal for a feasibility study'
-# Set an alternative document title in <head> (title for browser tabs). Empty string defaults to (possibly
-# too long) latex title.
-headtitle = 'Proposal mFUND'
+config = configparser.ConfigParser()
+config.read('config')
+conf = config['htlatex-prettify']
 
+path = conf['path']
+tmpdir = conf['tmpdir']
+title = conf['title']
+subtitle = conf['subtitle']
+headtitle = conf['headtitle']
 
-# Create build directory and copy latex source files
+# # Create build directory and copy latex source files
 if os.path.isdir(tmpdir):
     shutil.rmtree(tmpdir)
 os.mkdir(tmpdir)
