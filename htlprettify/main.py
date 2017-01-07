@@ -125,9 +125,12 @@ def main():
     myhtml.backtotop(tmpdir)
     myhtml.bodyscrollx(tmpdir)
 
-
-# # final html figure path
-# figures.changeHtmlFigpath(installpath, installimgpath)
+    # final html figure path
+    figures.changeHtmlFigpath(tmpdir, installimgpath)
+    # copy to install dir
+    cp = myutils.Copier(tmpdir, installpath)
+    cp.copy('main.html')
+    cp.copy('main.css')
 
     print('done')
 
