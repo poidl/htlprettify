@@ -67,7 +67,7 @@ def main():
 
     # htlatex
     cmd = 'cd ' + builddir + \
-        '; htlatex main.tex "xhtml, charset=utf-8" " -cunihtf -utf8" |grep -n1 -i error'
+        '; htlatex main.tex "xhtml, charset=utf-8, mathml" " -cunihtf -utf8" |grep -n1 -i error'
     print(cmd)
     out = subprocess.getoutput(cmd)
     if out:

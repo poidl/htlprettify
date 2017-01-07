@@ -1,1 +1,2 @@
+* breaks if build dir is within html install dir (or any other dir that's deleted)
 * Bugs: link to bibliography in TOC shouldn't be numbered?

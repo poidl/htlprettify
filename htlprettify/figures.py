@@ -35,12 +35,13 @@ def adjustFigPath(buildpath, figpath):
     for line in fin:
         if '\\graphicspath' in line:
             # no brackets, no SPACE
-            a = re.finditer(r'[^{} ]*',
-                            line.replace('\\graphicspath', '').replace('\n', ''))
-            b = [m.group(0) for m in a]
-            l = list(filter(None, b))
-            # append temporary path
-            l.append(tmp + '/')
+            # a = re.finditer(r'[^{} ]*',
+            #                 line.replace('\\graphicspath', '').replace('\n', ''))
+            # b = [m.group(0) for m in a]
+            # l = list(filter(None, b))
+            # # append temporary path
+            # l.append('figures/')
+            l = ['figures/']
             ml = ['{' + e + '}' for e in l]
             myline = '\\graphicspath{' + ''.join(ml) + '}'
             fout.write(line.replace(line, myline))

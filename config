@@ -7,7 +7,8 @@ figurepath = /home/stefan/Documents/bewerbungen/mfund/figures
 # Installation directory for html (absolute path)
 installpath = /home/stefan/programs/test
 # Installation directory for figures, RELATIVE to installpath. This is hard-coded
-# into the html file, and should be a relative path for portability
+# into the html file, and should be a relative path for portability. Its absolute
+# path may or may not be the same directory as figurepath
 installimgpath = ../test_mynewfigures
 
 # Build directory for latex and htlatex
