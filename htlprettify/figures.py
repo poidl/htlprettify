@@ -9,30 +9,7 @@ import glob
 import shutil
 import re
 from bs4 import BeautifulSoup
-import myutils
-
-
-# def pdf2pngQuirk(path, ):
-#     """Check that there is an *.svg for each *.pdf. Insert a (temporary)
-#    dummy *.png for *.pdf in tex file, to play nice with htlatex."""
-#     listing = glob.glob(path + '/figures/*.pdf')
-#     for fname in listing:
-#         svgname = fname.replace('.pdf', '.svg')
-#         if not os.path.isfile(svgname):
-#             raise Exception('There is no file \"' +
-#                             os.path.basename(svgname) + '\"')
-#         # create a dummy *.png file
-#         shutil.copyfile(os.path.dirname(__file__) +
-#                         '/data/dummy.png', fname.replace('.pdf', '.png'))
-
-#     fin = open(path + "/main.tex", 'r')
-#     fout = open(path + "/tmp.tex", 'w')
-#     for line in fin:
-#         if '\\includegraphics' in line:
-#             fout.write(line.replace('.pdf', '.png'))
-#             continue
-#         fout.write(line)
-#     shutil.move(path + "/tmp.tex", path + "/main.tex")
+import htlprettify.myutils as myutils
 
 
 def adjustFigPath(buildpath, figpath):
@@ -119,14 +96,3 @@ def changeHtmlFigpath(buildpath, newpath):
     html = str(soup)
     f = open(buildpath + "/main.html", "w")
     f.write(html)
-
-    #     fin = open(buildpath + "/main.html", 'r')
-    # fout = open(buildpath + "/tmp.html", 'w')
-    # for line in fin:
-    #     # TODO: use html parser here
-    #     if 'src=' in line:
-    #         m = re.sub(r'{.*}')
-    #         fout.write(line.replace('.png', '.svg'))
-    #         continue
-    #     fout.write(line)
-    # shutil.move(buildpath + "/tmp.html", buildpath + "/main.html")

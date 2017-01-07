@@ -11,7 +11,7 @@ installpath = /home/stefan/programs/test
 installimgpath = ../test_mynewfigures
 
 # Build directory for latex and htlatex
-tmpdir = tmp
+builddir = tmp
 # Set an alternative document title and subtitle. Empty string defaults to (possibly
 # too long) latex title.
 title = Numerical Ocean/Weather Modeling Platform as a Service

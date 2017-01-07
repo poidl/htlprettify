@@ -8,14 +8,10 @@ import shutil
 import os
 import subprocess
 
-import myutils
-import figures
-import mycss
-import myhtml
-# import htlprettify.myutils as myutils
-# import htlprettify.figures as figures
-# import htlprettify.mycss as mycss
-# import htlprettify.myhtml as myhtml
+import htlprettify.myutils as myutils
+import htlprettify.figures as figures
+import htlprettify.mycss as mycss
+import htlprettify.myhtml as myhtml
 
 config = configparser.ConfigParser()
 config.read('./config')
@@ -25,7 +21,7 @@ path = conf['path']
 figurepath = conf['figurepath']
 installpath = conf['installpath']
 installimgpath = conf['installimgpath']
-tmpdir = conf['tmpdir']
+builddir = conf['builddir']
 title = conf['title']
 subtitle = conf['subtitle']
 headtitle = conf['headtitle']
@@ -36,11 +32,11 @@ def main():
     # Config arg sanity check
     myutils.pathsanitycheck(path, figurepath, installpath, installimgpath)
 # Create build directory and copy latex source files
-    if os.path.isdir(tmpdir):
-        shutil.rmtree(tmpdir)
-    os.mkdir(tmpdir)
-    os.mkdir(tmpdir + '/nobackup')
-    cp = myutils.Copier(path, tmpdir)
+    if os.path.isdir(builddir):
+        shutil.rmtree(builddir)
+    os.mkdir(builddir)
+    os.mkdir(builddir + '/nobackup')
+    cp = myutils.Copier(path, builddir)
     cp.copy('main.tex')
     cp.copy('main.bib')
     cp.copy('model2-names.bst')
@@ -51,11 +47,11 @@ def main():
     # the same name is present (SVG is best for HTML?). Substitute them
     # temporarily by PNGs, to avoid errors with latex and htlatex.
 
-    # figures.pdf2pngQuirk(tmpdir)
-    figures.adjustFigPath(tmpdir, figurepath)
+    # figures.pdf2pngQuirk(builddir)
+    figures.adjustFigPath(builddir, figurepath)
 
     # Latex first run
-    cmd = 'cd ' + tmpdir + '; pdflatex -synctex=1 -output-directory=nobackup' \
+    cmd = 'cd ' + builddir + '; pdflatex -synctex=1 -output-directory=nobackup' \
         + ' -halt-on-error -file-line-error main.tex|grep -n1 -i error'
     print(cmd)
     out = subprocess.getoutput(cmd)
@@ -63,14 +59,14 @@ def main():
         raise Exception('********* Latex error *************\n' + out)
 
     # Bibtex
-    cmd = 'cd ' + tmpdir + '; bibtex nobackup/main.aux'
+    cmd = 'cd ' + builddir + '; bibtex nobackup/main.aux'
     print(cmd)
     os.system(cmd)
 
-    shutil.copyfile(tmpdir + '/nobackup/main.bbl', tmpdir + '/main.bbl')
+    shutil.copyfile(builddir + '/nobackup/main.bbl', builddir + '/main.bbl')
 
     # htlatex
-    cmd = 'cd ' + tmpdir + \
+    cmd = 'cd ' + builddir + \
         '; htlatex main.tex "xhtml, charset=utf-8" " -cunihtf -utf8" |grep -n1 -i error'
     print(cmd)
     out = subprocess.getoutput(cmd)
@@ -106,29 +102,29 @@ def main():
         figures.move(figurepath, installimgpath_abs)
 
     # substitute dummy PNGs with SVGs in html file ...
-    figures.png2svgSubstitution(tmpdir, installimgpath_abs)
+    figures.png2svgSubstitution(builddir, installimgpath_abs)
     # ... and temporarily change the html figure path to the absolute path, so
     # one can experiment with the css and html modifications below.
-    figures.changeHtmlFigpath(tmpdir, installimgpath_abs)
+    figures.changeHtmlFigpath(builddir, installimgpath_abs)
 
     # CSS stuff
-    mycss.figs(tmpdir)
-    mycss.fonts(tmpdir)
-    mycss.body(tmpdir)
-    mycss.backtotop(tmpdir)
+    mycss.figs(builddir)
+    mycss.fonts(builddir)
+    mycss.body(builddir)
+    mycss.backtotop(builddir)
 
     # HTML stuff
-    myhtml.mytitle(tmpdir, title, subtitle)
-    myhtml.myheadtitle(tmpdir, headtitle)
-    myhtml.viewport(tmpdir)
-    myhtml.toc(tmpdir)
-    myhtml.backtotop(tmpdir)
-    myhtml.bodyscrollx(tmpdir)
+    myhtml.mytitle(builddir, title, subtitle)
+    myhtml.myheadtitle(builddir, headtitle)
+    myhtml.viewport(builddir)
+    myhtml.toc(builddir)
+    myhtml.backtotop(builddir)
+    myhtml.bodyscrollx(builddir)
 
     # final html figure path
-    figures.changeHtmlFigpath(tmpdir, installimgpath)
+    figures.changeHtmlFigpath(builddir, installimgpath)
     # copy to install dir
-    cp = myutils.Copier(tmpdir, installpath)
+    cp = myutils.Copier(builddir, installpath)
     cp.copy('main.html')
     cp.copy('main.css')
 
