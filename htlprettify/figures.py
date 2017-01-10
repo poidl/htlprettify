@@ -9,7 +9,8 @@ import glob
 import shutil
 import re
 from bs4 import BeautifulSoup
-import htlprettify.myutils as myutils
+# import htlprettify.myutils as myutils
+import myutils
 
 
 def adjustFigPath(buildpath, figpath):

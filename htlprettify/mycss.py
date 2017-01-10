@@ -4,13 +4,47 @@
 """CSS modifications"""
 
 import shutil
+import re
 from bs4 import BeautifulSoup
+
+
+def getFigSize(buildpath):
+    fin = open(buildpath + "/main.tex", 'r')
+    for line in fin:
+        # if '\\graphicspath' in line:
+        #     # no brackets, no SPACE
+        #     # a = re.finditer(r'[^{} ]*',
+        #     #                 line.replace('\\graphicspath', '').replace('\n', ''))
+        #     # b = [m.group(0) for m in a]
+        #     # l = list(filter(None, b))
+        #     # # append temporary path
+        #     # l.append('figures/')
+        #     l = ['figures/']
+        #     ml = ['{' + e + '}' for e in l]
+        #     myline = '\\graphicspath{' + ''.join(ml) + '}'
+        #     fout.write(line.replace(line, myline))
+        #     continue
+        # \includegraphics[width = 0.5\textwidth]{met_t2micro.png}
+        if '\\includegraphics' in line:
+            if not '\\textwidth' in line:
+                raise Exception(
+                    "There is no 'width = *\\textwidth' in the includegraphics command, figure sizing won't work.")
+            m = re.search('[0-9]\.[0-9]*(?=.*textwidth)', line)
+            if m:
+                sz = m.group(0)
+                return sz
+            else:
+                raise Exception("Could not retrieve figure size from latex.")
+
+# fout.write(line.replace('.pdf', '.png'))
+# continue
 
 
 def figs(path):
     """Inject a style attribute to <img> and their <p> parents"""
     # TODO: Here we are injecting style attributes to *.html. Is it better to
     # define a new css class and reference that from *.html instead?
+    sz = getFigSize(path)
 
     f = open(path + "/main.html")
     s = f.read()
@@ -21,7 +55,8 @@ def figs(path):
     ls = len(sectitlelist)
     for i in range(ls):
         l = sectitlelist[i]
-        l['style'] = "width: 100%; max-width: 800px;"
+        l['style'] = "width: " + \
+            str(round(float(sz) * 100)) + "%; max-width: 800px;"
         l.parent['style'] = "text-align:center"
 
     html = str(soup)
