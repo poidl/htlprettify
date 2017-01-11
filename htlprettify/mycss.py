@@ -5,6 +5,7 @@
 
 import shutil
 import re
+import math
 from bs4 import BeautifulSoup
 
 
@@ -45,6 +46,9 @@ def figs(path):
     # TODO: Here we are injecting style attributes to *.html. Is it better to
     # define a new css class and reference that from *.html instead?
     sz = getFigSize(path)
+    # could use sz*100 as width, but looks a bit small. Use sqrt, or even
+    # **(1/3)?
+    sz = math.sqrt(float(sz))
 
     f = open(path + "/main.html")
     s = f.read()
@@ -55,8 +59,7 @@ def figs(path):
     ls = len(sectitlelist)
     for i in range(ls):
         l = sectitlelist[i]
-        l['style'] = "width: " + \
-            str(round(float(sz) * 100)) + "%; max-width: 800px;"
+        l['style'] = "width: " + str(round(sz * 100)) + "%; max-width: 800px;"
         l.parent['style'] = "text-align:center"
 
     html = str(soup)

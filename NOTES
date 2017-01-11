@@ -1,5 +1,5 @@
-*) in *tex file, fill in the png files without size with/height info
- 	\includegraphics{EXAMPLE.png}	
+This is a personal notepad, it may be out of date and is not intended as documentation.
+
 *) run hlatex with utf8 encoding:
 	htlatex main.tex "xhtml, charset=utf-8" " -cunihtf -utf8"
 	IF ERROR, ARE YOU USING \usepackage{authblk} % for multiple authors with different affiliations ??? this causes problems
