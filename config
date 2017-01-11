@@ -13,10 +13,10 @@ installimgpath = ../test_mynewfigures
 
 # Build directory for latex and htlatex
 builddir = tmp
-# Set an alternative document title and subtitle. Empty string defaults to (possibly
-# too long) latex title.
+# Set an alternative document title and subtitle. Leaving this empty defaults
+# to (possibly too long) latex title.
 title = Numerical Ocean/Weather Modeling Platform as a Service
 subtitle = Proposal for a feasibility study
-# Set an alternative document title in <head> (title for browser tabs). Empty string defaults to (possibly
-# too long) latex title.
+# Set an alternative document title in <head> (title for browser tabs). Leaving
+# this empty defaults to (possibly too long) latex title.
 headtitle = Proposal mFUND
