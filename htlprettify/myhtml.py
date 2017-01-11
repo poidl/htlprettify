@@ -224,3 +224,20 @@ def bodyscrollx(path):
     html = str(soup)
     f = open(path + "/main.html", "w")
     f.write(html)
+
+
+def mathjax(builddir):
+    """Add mathjax CDN."""
+    f = open(builddir + "/main.html")
+    s = f.read()
+
+    soup = BeautifulSoup(s, 'html.parser')
+    new_tag = soup.new_tag("script")
+    new_tag['type'] = "text/javascript"
+    new_tag['async'] = "true"
+    new_tag['src'] = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_CHTML"
+    soup.head.append(new_tag)
+
+    html = str(soup)
+    f = open(builddir + "/main.html", "w")
+    f.write(html)

@@ -124,7 +124,7 @@ def main():
     myhtml.toc(builddir)
     myhtml.backtotop(builddir)
     myhtml.bodyscrollx(builddir)
-
+    myhtml.mathjax(builddir)
     # final html figure path
     figures.changeHtmlFigpath(builddir, installimgpath)
     # copy to install dir
