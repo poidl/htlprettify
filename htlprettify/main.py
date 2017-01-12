@@ -8,14 +8,14 @@ import shutil
 import os
 import subprocess
 
-# import myutils
-# import figures
-# import mycss
-# import myhtml
-import htlprettify.myutils as myutils
-import htlprettify.figures as figures
-import htlprettify.mycss as mycss
-import htlprettify.myhtml as myhtml
+import myutils
+import figures
+import mycss
+import myhtml
+# import htlprettify.myutils as myutils
+# import htlprettify.figures as figures
+# import htlprettify.mycss as mycss
+# import htlprettify.myhtml as myhtml
 
 config = configparser.ConfigParser()
 config.read('./config')
@@ -36,10 +36,10 @@ def main():
     # Config arg sanity check
     myutils.pathsanitycheck(path, figurepath, installpath, installimgpath)
 # Create build directory and copy latex source files
-    if os.path.isdir(builddir):
-        shutil.rmtree(builddir)
-    os.mkdir(builddir)
-    os.mkdir(builddir + '/nobackup')
+    if not os.path.isdir(builddir):
+        os.mkdir(builddir)
+    if not os.path.isdir(builddir + '/nobackup'):
+        os.mkdir(builddir + '/nobackup')
     cp = myutils.Copier(path, builddir)
     cp.copy('main.tex')
     cp.copy('main.bib')
@@ -87,9 +87,8 @@ def main():
 
     # Delete/create html install directory
     p = installpath
-    if os.path.isdir(p):
-        shutil.rmtree(p)
-    os.mkdir(p)
+    if not os.path.isdir(p):
+        os.mkdir(p)
 
     # Delete/create figure install directory only if it's not identical to the
     # latex source figure path. TODO: danger: may loose all figures.
@@ -99,9 +98,8 @@ def main():
     p2 = os.path.abspath(installimgpath_abs)
     if p1 != p2:
         p = p2
-        if os.path.isdir(p):
-            shutil.rmtree(p)
-        os.mkdir(p)
+        if not os.path.isdir(p):
+            os.mkdir(p)
         # move SVGs to imgrelpath
         figures.move(figurepath, installimgpath_abs)
 
