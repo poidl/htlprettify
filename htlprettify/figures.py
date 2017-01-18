@@ -68,12 +68,12 @@ def png2svgSubstitution(buildpath, installimgpath):
 
     soup = BeautifulSoup(s, 'html.parser')
 
-    sectitlelist = soup.find_all('img')
-    ls = len(sectitlelist)
+    imglist = soup.find_all('img')
+    ls = len(imglist)
     for i in range(ls):
-        l = sectitlelist[i]
+        l = imglist[i]
         l['src'] = l['src'].replace('png', 'svg')
-
+    print(soup.prettify)
     html = str(soup)
     f = open(buildpath + "/main.html", "w")
     f.write(html)
