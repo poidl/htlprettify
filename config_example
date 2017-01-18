@@ -1,22 +1,22 @@
 [htlprettify]
 # Root directory of latex project, containing latex source (absolute path)
-path = /home/stefan/Documents/bewerbungen/mfund
+path = /home/bla/latexroot
 # Latex \graphicspath (absolute path)
-figurepath = /home/stefan/Documents/bewerbungen/mfund/figures
+figurepath = /home/bla/figures
 
 # Installation directory for html (absolute path)
-installpath = /home/stefan/programs/test
+installpath = /home/bla/html
 # Installation directory for figures, RELATIVE to installpath. This is hard-coded
 # into the html file, and should be a relative path for portability. Its absolute
 # path may or may not be the same directory as figurepath
-installimgpath = ../test_mynewfigures
+installimgpath = ../webfigures
 
 # Build directory for latex and htlatex
 builddir = tmp
 # Set an alternative document title and subtitle. Leaving this empty defaults
 # to (possibly too long) latex title.
-title = Numerical Ocean/Weather Modeling Platform as a Service
-subtitle = Proposal for a feasibility study
+title = A title
+subtitle = A subtitle
 # Set an alternative document title in <head> (title for browser tabs). Leaving
 # this empty defaults to (possibly too long) latex title.
-headtitle = Proposal mFUND
+headtitle = Title of browser tab
