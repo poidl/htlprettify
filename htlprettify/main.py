@@ -8,10 +8,6 @@ import shutil
 import os
 import subprocess
 
-# import myutils
-# import figures
-# import mycss
-# import myhtml
 import htlprettify.myutils as myutils
 import htlprettify.figures as figures
 import htlprettify.mycss as mycss

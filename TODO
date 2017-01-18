@@ -1,2 +1,2 @@
-* breaks if build dir is within html install dir (or any other dir that's deleted)
+* Check if date is generated correctly
 * Bugs: link to bibliography in TOC shouldn't be numbered?

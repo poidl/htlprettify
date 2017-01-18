@@ -9,3 +9,4 @@ makeall
 doitall
 figures
 htl_tmp_builddir
+setpythonpath
