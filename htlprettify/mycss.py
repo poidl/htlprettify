@@ -107,7 +107,7 @@ def backtotop(path):
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
-    display: none;
+    display: inline-block;
     font-size: 16px;
 	z-index: 999;
 }

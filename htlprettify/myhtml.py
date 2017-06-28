@@ -136,16 +136,17 @@ def backtotop(path):
 
     soup = BeautifulSoup(s, 'html.parser')
 
+    # # Warning: this script causes severe lags in some Firefox versions:
+    # <script type="text/javascript">
+    #     window.onscroll=function(){
+    #         if (window.scrollY > 300 ) {
+    #             document.getElementById('back-to-top').style.display="inline-block";
+    #         } else {
+    #             document.getElementById('back-to-top').style.display="none";
+    #         }
+    #     }
+    # </script>
     s = """
-    <script type="text/javascript">
-        window.onscroll=function(){
-            if (window.scrollY > 300 ) {
-                document.getElementById('back-to-top').style.display="inline-block";
-            } else {
-                document.getElementById('back-to-top').style.display="none";
-            }
-        }
-    </script>
     <div style="position: fixed; bottom: 25px; width=100%; max-width: 800px; margin:auto; text-align: right; left:0; right: 0;  padding-right: 1em;">
         <a href="#mycontents" id="back-to-top" class="back-to-top">Table of contents</a>
     </div>
